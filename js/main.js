@@ -7,8 +7,8 @@ let margin = {
     right: 30,
     bottom: 35
   },
-  width = 500 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+  width = 2100 - margin.left - margin.right,
+  height = 800 - margin.top - margin.bottom;
 
 // first visualization
 let svg1 = d3.select('#vis1')
@@ -25,3 +25,11 @@ let svg2 = d3.select('#vis2')
   .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
   .style('background-color', '#ccc') // change the background color to light gray
   .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
+
+CSVdata = []
+d3.csv("airtravel.csv", function(data) {
+      for (int i = 0; i < 800; i++) {
+        CSVdata.push(data[i]);
+    }
+    drawScatterPlotChart(CSVdata);
+});
