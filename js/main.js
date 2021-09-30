@@ -97,6 +97,7 @@ let svg2 = d3.select('#vis2')
   .style('background-color', '#ccc') // change the background color to light gray
   .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
 
+// gets the date from that data
 let parseMonths = d3.time.format("%M").parse;
 d3.csv("crash_catalonia.csv", function(error, data) {
   data.forEach(function(d) {
@@ -109,41 +110,47 @@ d3.csv("crash_catalonia.csv", function(error, data) {
       .attr("width", width)
       .attr("height", height);
   
+   // x scale for months
   let xScale = d3.scaleLinear()
   .domain([1,12])
   .range([0 , width])
 
+  // y scale for data
   let yScale = d3.scaleLinear()
   .domain([0, 500])
   .range([200, 700])
   
+  // selects all from the dot class(which is nothing at the start)
   let circle = svg.selectAll(dot)
   .data(data)
   .enter().append('circle') 
-  .attr('class', 'dot')
-  .attr('r', 10) 
-  .attr("cx", function(d) { return xScale(d.Month); })
-  .attr("cy", function(d) { return yScale(d["1958"]); });
+  .attr('class', 'dot') // declares the data as a dot in class
+  .attr('r', 10) //radius
+  .attr("cx", function(d) { return xScale(d.Month); }) // to put in scale
+  .attr("cy", function(d) { return yScale(d["1958"]); }); // to put in scale
     
+   //text for the number of flights in each month of 1958
   let text = svg.selectAll("text")
   .data(data)
   .enter().append("text")
   .attr("x", function(d) { return xScale(d.Month); })
   .attr("y", function(d) { return yScale(d["1958"]); })
-  .attr('dy', -10);
+  .attr('dy', -10); // so the text wont be on the dot
     
-let xAxis = d3.axisBottom(xScale);
 
-let yAxis = d3.axisLeft(yScale);
+let xAxis = d3.axisBottom(xScale); // creates the x axis on the bottom
 
-let xAxisGroup = svg.append("g")
+let yAxis = d3.axisLeft(yScale); // creates the y axis on the left side
+
+    
+let xAxisGroup = svg.append("g") // appends the axises
     .attr("class", "x axis")
     .call(xAxis);
 let yAxisGroup = svg.append("g")
     .attr("class", "y axis") 
     .call(yAxis);
     
-let dotGroup = svg.selectAll('dot')
+let dotGroup = svg.selectAll('dot') // creates a grouping and appends the circle and text
   .data(data).enter().append('g') 
   .attr('class', 'dot')
   .attr('transform', function(d) { return 'translate(' + xScale(d.Month) + ',' + yScale(d["1958"]) + ')'})
