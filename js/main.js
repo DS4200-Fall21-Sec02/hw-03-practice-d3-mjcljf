@@ -46,11 +46,11 @@ let yScale = d3.scale.linear().range([20000, 0])
 let xScale = d3.scale.ordinal().rangeRoundBands([0, 20000], .1)
   
     
-  svg.append("g")
+  svg1.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-  svg.append("g")
+  svg1.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
@@ -84,7 +84,7 @@ let margin = {
   width = 500 - margin.left - margin.right,
   height = 700 - margin.top - margin.bottom;
 
-let svg = d3.select("body").append("svg")
+let svg1 = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
@@ -106,7 +106,7 @@ d3.csv("crash_catalonia.csv", function(error, data) {
     }
 });
 
-  let svg = d3.select("body").append("svg") 
+  let svg2 = d3.select("body").append("svg") 
       .attr("width", width)
       .attr("height", height);
   
@@ -143,14 +143,14 @@ let xAxis = d3.axisBottom(xScale); // creates the x axis on the bottom
 let yAxis = d3.axisLeft(yScale); // creates the y axis on the left side
 
     
-let xAxisGroup = svg.append("g") // appends the axises
+let xAxisGroup = svg2.append("g") // appends the axises
     .attr("class", "x axis")
     .call(xAxis);
-let yAxisGroup = svg.append("g")
+let yAxisGroup = svg2.append("g")
     .attr("class", "y axis") 
     .call(yAxis);
     
-let dotGroup = svg.selectAll('dot') // creates a grouping and appends the circle and text
+let dotGroup = svg2.selectAll('dot') // creates a grouping and appends the circle and text
   .data(data).enter().append('g') 
   .attr('class', 'dot')
   .attr('transform', function(d) { return 'translate(' + xScale(d.Month) + ',' + yScale(d["1958"]) + ')'})
